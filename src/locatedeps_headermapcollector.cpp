@@ -1,4 +1,5 @@
 #include <locatedeps_headermapcollector.h>
+#include <locatedeps_assert.h>
 
 #include <llvm/Support/Regex.h>
 
@@ -8,7 +9,7 @@ namespace locate_deps {
 HeaderMapCollector::HeaderMapCollector(
     const RegexHeaderMap* RegexHeaderMappingTable)
 {
-    assert(RegexHeaderMappingTable);
+    UNSAFE_ASSERT(RegexHeaderMappingTable);
     this->RegexHeaderMappingTable.reserve(RegexHeaderMappingTable->size());
     for (const auto& Entry: *RegexHeaderMappingTable)
     {

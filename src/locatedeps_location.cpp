@@ -43,5 +43,12 @@ Location::operator<(const Location& other) const
         std::tie(other._filename, other._line, other._column);
 }
 
+void
+Location::serialize(json::Document& document)
+{
+
+}
+
+
 }
 }

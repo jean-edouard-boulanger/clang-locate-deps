@@ -6,6 +6,7 @@
 #include <locatedeps_location.h>
 #include <locatedeps_symbolfactory.h>
 #include <locatedeps_symbol.h>
+#include <locatedeps_assert.h>
 
 #include <clang/AST/Decl.h>
 #include <clang/AST/DeclCXX.h>
@@ -233,7 +234,7 @@ FindAllSymbols::run(const MatchFinder::MatchResult& result)
     }
     else
     {
-        assert(false && "Must match a NamedDecl!");
+        UNSAFE_ASSERT(false && "Must match a NamedDecl!");
     }
 }
 

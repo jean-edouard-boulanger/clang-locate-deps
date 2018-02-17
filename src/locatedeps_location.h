@@ -1,6 +1,8 @@
 #ifndef LOCATE_DEPS_LOCATION
 #define LOCATE_DEPS_LOCATION
 
+#include <locatedeps_serialization.h>
+
 #include <string>
 #include <cstddef>
 
@@ -17,6 +19,8 @@ public:
 
     bool operator==(const Location& other) const;
     bool operator<(const Location& other) const;
+
+    void serialize(json::Document&);
 
 private:
     std::string _filename;

@@ -1,5 +1,6 @@
 #include <locatedeps_contextfactory.h>
 #include <locatedeps_context.h>
+#include <locatedeps_assert.h>
 
 #include <clang/AST/Decl.h>
 #include <clang/AST/DeclCXX.h>
@@ -22,8 +23,8 @@ build_scope(const NamedDecl& namedDecl)
             break;
         }
 
-        assert(llvm::isa<NamedDecl>(declContext) &&
-               "Expect declContext to be a NamedDecl");
+        UNSAFE_ASSERT(llvm::isa<NamedDecl>(declContext) &&
+            "Expect declContext to be a NamedDecl");
 
         if (const auto* namespaceDecl = dyn_cast<NamespaceDecl>(declContext))
         {
@@ -47,7 +48,7 @@ build_scope(const NamedDecl& namedDecl)
         }
         else
         {
-            assert(false &&
+            UNSAFE_ASSERT(false &&
                 "recordDecl must be NamespaceDecl or EnumDecl or RecordDecl");
         }
     }
