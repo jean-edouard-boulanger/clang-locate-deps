@@ -3,7 +3,7 @@
 #include <tuple>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 Context::Context(Kind kind, std::string name):
     _kind(kind),

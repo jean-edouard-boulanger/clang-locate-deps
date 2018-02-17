@@ -6,7 +6,7 @@
 #include <llvm/ADT/STLExtras.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 FindAllSymbolsAction::FindAllSymbolsAction(
     SymbolReporter* Reporter,
@@ -24,5 +24,5 @@ std::unique_ptr<ASTConsumer> FindAllSymbolsAction::CreateASTConsumer(
     return MatchFinder.newASTConsumer();
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang

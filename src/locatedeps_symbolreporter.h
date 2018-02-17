@@ -4,7 +4,7 @@
 #include <locatedeps_symbolinfo.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 /// \brief An interface for classes that collect symbols.
 class SymbolReporter {
@@ -15,7 +15,7 @@ public:
                                const SymbolInfo::SignalMap& Symbols) = 0;
 };
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_SYMBOL_REPORTER_H

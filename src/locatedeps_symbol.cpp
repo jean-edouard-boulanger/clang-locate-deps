@@ -3,7 +3,7 @@
 #include <tuple>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 Symbol::Symbol(const Location& location,
                const Scope& scope,

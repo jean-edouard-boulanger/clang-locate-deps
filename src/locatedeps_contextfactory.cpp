@@ -6,7 +6,7 @@
 
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 Scope
 build_scope(const NamedDecl& namedDecl)

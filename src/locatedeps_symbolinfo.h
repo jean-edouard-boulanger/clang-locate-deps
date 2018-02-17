@@ -11,7 +11,7 @@
 #include <vector>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 /// \brief Describes a named symbol from a header.
 /// Symbols with the same qualified name and type (e.g. function overloads)
 /// that appear in the same header are represented by a single SymbolInfo.
@@ -129,7 +129,7 @@ bool WriteSymbolInfosToStream(llvm::raw_ostream& OS,
 /// \brief Read SymbolInfos from a YAML document.
 std::vector<SymbolAndSignals> ReadSymbolInfosFromYAML(llvm::StringRef Yaml);
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_SYMBOLINFO_H

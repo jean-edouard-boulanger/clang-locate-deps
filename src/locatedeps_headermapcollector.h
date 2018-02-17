@@ -8,7 +8,7 @@
 #include <vector>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 /// \brief HeaderMappCollector collects all remapping header files. This maps
 /// complete header names or header name regex patterns to header names.
@@ -42,7 +42,7 @@ private:
         RegexHeaderMappingTable;
 };
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_HEADER_MAP_COLLECTOR_H

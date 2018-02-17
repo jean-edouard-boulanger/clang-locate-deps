@@ -3,7 +3,7 @@
 #include <tuple>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 Dependency::Dependency(const Location& from, const Symbol& to):
     _from(from),

@@ -30,11 +30,11 @@
 
 using namespace clang::tooling;
 using namespace llvm;
-using SymbolInfo = clang::find_all_symbols::SymbolInfo;
+using SymbolInfo = clang::locate_deps::SymbolInfo;
 
 // Apply a custom category to all command-line options so that they are the
 // only ones displayed.
-static cl::OptionCategory FindAllSymbolsCategory("find_all_symbols options");
+static cl::OptionCategory FindAllSymbolsCategory("locate_deps options");
 
 // CommonOptionsParser declares HelpMessage with a description of the common
 // command-line options related to the compilation database and input files.
@@ -53,7 +53,7 @@ static cl::opt<std::string> MergeDir("merge-dir", cl::desc(R"(
 The directory for merging symbols.)"), cl::init(""),
                                      cl::cat(FindAllSymbolsCategory));
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class YamlReporter : public SymbolReporter {
 public:
@@ -120,7 +120,7 @@ bool Merge(llvm::StringRef MergeDir, llvm::StringRef OutputFile) {
     return true;
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 int main(int argc, const char** argv) {
@@ -134,14 +134,14 @@ int main(int argc, const char** argv) {
         return 1;
     }
     if (!MergeDir.empty()) {
-        clang::find_all_symbols::Merge(MergeDir, sources[0]);
+        clang::locate_deps::Merge(MergeDir, sources[0]);
         return 0;
     }
 
-    clang::find_all_symbols::YamlReporter Reporter;
+    clang::locate_deps::YamlReporter Reporter;
 
     auto Factory =
-        llvm::make_unique<clang::find_all_symbols::FindAllSymbolsActionFactory>(
-            &Reporter, clang::find_all_symbols::getSTLPostfixHeaderMap());
+        llvm::make_unique<clang::locate_deps::FindAllSymbolsActionFactory>(
+            &Reporter, clang::locate_deps::getSTLPostfixHeaderMap());
     return Tool.run(Factory.get());
 }

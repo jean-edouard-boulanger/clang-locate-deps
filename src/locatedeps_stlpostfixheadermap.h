@@ -4,11 +4,11 @@
 #include <locatedeps_headermapcollector.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 const HeaderMapCollector::RegexHeaderMap* getSTLPostfixHeaderMap();
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_STL_POSTFIX_HEADER_MAP_H

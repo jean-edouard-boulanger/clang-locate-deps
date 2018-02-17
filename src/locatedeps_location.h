@@ -5,7 +5,7 @@
 #include <cstddef>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class Location {
 public:

@@ -13,7 +13,7 @@
 #include <set>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class HeaderMapCollector;
 
@@ -48,7 +48,7 @@ private:
     HeaderMapCollector* const _collector;
 };
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_FIND_ALL_SYMBOLS_H

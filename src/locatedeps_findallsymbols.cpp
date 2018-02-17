@@ -20,7 +20,7 @@
 using namespace clang::ast_matchers;
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 namespace {
 
 AST_MATCHER(EnumConstantDecl, isInScopedEnum) {
@@ -250,5 +250,5 @@ FindAllSymbols::onEndOfTranslationUnit()
     }
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang

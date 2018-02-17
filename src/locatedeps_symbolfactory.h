@@ -9,7 +9,7 @@ namespace clang { class NamedDecl; }
 namespace clang { class SourceManager; }
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class HeaderMapCollector;
 

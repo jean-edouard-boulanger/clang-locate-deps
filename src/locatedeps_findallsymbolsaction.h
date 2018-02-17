@@ -14,7 +14,7 @@
 #include <memory>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class FindAllSymbolsAction : public clang::ASTFrontendAction {
 public:
@@ -48,7 +48,7 @@ private:
     const HeaderMapCollector::RegexHeaderMap* const RegexHeaderMap;
 };
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_FIND_ALL_SYMBOLS_ACTION_H

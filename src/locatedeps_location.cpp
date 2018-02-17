@@ -3,7 +3,7 @@
 #include <tuple>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 Location::Location(const std::string& filename, size_t line, size_t column):
     _filename(filename),

@@ -8,7 +8,7 @@
 #include <string>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 /// \brief This calculates the include path for \p Loc.
 ///
@@ -23,7 +23,7 @@ namespace find_all_symbols {
 std::string getIncludePath(const SourceManager& SM, SourceLocation Loc,
                            const HeaderMapCollector* Collector = nullptr);
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
 
 #endif  // LOCATE_DEPS_PATH_CONFIG_H

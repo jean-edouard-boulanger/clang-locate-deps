@@ -8,7 +8,7 @@
 
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 class Symbol {
 public:

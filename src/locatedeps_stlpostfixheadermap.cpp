@@ -1,7 +1,7 @@
 #include <locatedeps_stlpostfixheadermap.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 const HeaderMapCollector::RegexHeaderMap* getSTLPostfixHeaderMap() {
     static const HeaderMapCollector::RegexHeaderMap STLPostfixHeaderMap = {
@@ -641,5 +641,5 @@ const HeaderMapCollector::RegexHeaderMap* getSTLPostfixHeaderMap() {
     return &STLPostfixHeaderMap;
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang

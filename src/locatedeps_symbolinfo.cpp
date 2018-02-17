@@ -8,10 +8,10 @@
 using llvm::yaml::IO;
 using llvm::yaml::Input;
 using llvm::yaml::MappingTraits;
-using ContextType = clang::find_all_symbols::SymbolInfo::ContextType;
-using clang::find_all_symbols::SymbolAndSignals;
-using clang::find_all_symbols::SymbolInfo;
-using SymbolKind = clang::find_all_symbols::SymbolInfo::SymbolKind;
+using ContextType = clang::locate_deps::SymbolInfo::ContextType;
+using clang::locate_deps::SymbolAndSignals;
+using clang::locate_deps::SymbolInfo;
+using SymbolKind = clang::locate_deps::SymbolInfo::SymbolKind;
 
 LLVM_YAML_IS_DOCUMENT_LIST_VECTOR(SymbolAndSignals)
 LLVM_YAML_IS_SEQUENCE_VECTOR(SymbolInfo::Context)
@@ -65,7 +65,7 @@ struct MappingTraits<SymbolInfo::Context> {
 }  // namespace llvm
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 SymbolInfo::SymbolInfo(llvm::StringRef Name, SymbolKind Type,
                        llvm::StringRef FilePath,
@@ -128,5 +128,5 @@ std::vector<SymbolAndSignals> ReadSymbolInfosFromYAML(llvm::StringRef Yaml) {
     return Symbols;
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang

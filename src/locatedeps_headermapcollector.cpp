@@ -3,7 +3,7 @@
 #include <llvm/Support/Regex.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 HeaderMapCollector::HeaderMapCollector(
     const RegexHeaderMap* RegexHeaderMappingTable)
@@ -31,5 +31,5 @@ HeaderMapCollector::getMappedHeader(llvm::StringRef Header) const
     return Header;
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang

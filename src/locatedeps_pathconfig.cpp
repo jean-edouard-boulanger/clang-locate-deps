@@ -3,7 +3,7 @@
 #include <llvm/Support/Path.h>
 
 namespace clang {
-namespace find_all_symbols {
+namespace locate_deps {
 
 std::string
 getIncludePath(const SourceManager& sourceManager,
@@ -47,5 +47,5 @@ getIncludePath(const SourceManager& sourceManager,
     return cleanFilePath.str();
 }
 
-}  // namespace find_all_symbols
+}  // namespace locate_deps
 }  // namespace clang
