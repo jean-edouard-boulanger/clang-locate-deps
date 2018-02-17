@@ -14,32 +14,49 @@ namespace clang {
 namespace locate_deps {
 namespace {
 
+std::string
+make_symbol_name(const FunctionDecl& functionDecl)
+{
+    return functionDecl.getNameAsString();
+}
+
+std::string
+make_symbol_name(const NamedDecl& namedDecl)
+{
+    if(llvm::isa<FunctionDecl>(namedDecl))
+    {
+        return make_symbol_name(
+            *llvm::dyn_cast<FunctionDecl>(&namedDecl));
+    }
+    return namedDecl.getNameAsString();
+}
+
 llvm::Optional<Symbol::Kind>
 get_symbol_kind(const NamedDecl& namedDecl)
 {
-    if (llvm::isa<VarDecl>(namedDecl))
+    if(llvm::isa<VarDecl>(namedDecl))
     {
         return Symbol::Kind::Variable;
     }
-    if (llvm::isa<FunctionDecl>(namedDecl))
+    if(llvm::isa<FunctionDecl>(namedDecl))
     {
         return Symbol::Kind::Function;
     }
-    if (llvm::isa<TypedefNameDecl>(namedDecl))
+    if(llvm::isa<TypedefNameDecl>(namedDecl))
     {
         return Symbol::Kind::Typedef;
     }
-    if (llvm::isa<EnumConstantDecl>(namedDecl))
+    if(llvm::isa<EnumConstantDecl>(namedDecl))
     {
         return Symbol::Kind::EnumConstant;
     }
-    if (llvm::isa<EnumDecl>(namedDecl))
+    if(llvm::isa<EnumDecl>(namedDecl))
     {
         // Ignore anonymous enum declarations.
         if (namedDecl.getName().empty()) return llvm::None;
         return Symbol::Kind::Enum;
     }
-    if (llvm::isa<RecordDecl>(namedDecl))
+    if(llvm::isa<RecordDecl>(namedDecl))
     {
         // C-style record decl can have empty name, e.g "struct { ... } var;".
         if (namedDecl.getName().empty()) return llvm::None;
@@ -86,7 +103,7 @@ build_symbol(const NamedDecl& namedDecl,
         fullLocation,
         build_scope(namedDecl),
         *symbolKind,
-        namedDecl.getNameAsString());
+        make_symbol_name(namedDecl));
 }
 
 }
