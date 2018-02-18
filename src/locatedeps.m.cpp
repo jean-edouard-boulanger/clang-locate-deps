@@ -1,4 +1,4 @@
-#include <locatedeps_findallsymbolsaction.h>
+#include <locatedeps_findalldependenciesaction.h>
 #include <locatedeps_stlpostfixheadermap.h>
 #include <locatedeps_symbolinfo.h>
 #include <locatedeps_symbolreporter.h>
@@ -34,7 +34,7 @@ using SymbolInfo = clang::locate_deps::SymbolInfo;
 
 // Apply a custom category to all command-line options so that they are the
 // only ones displayed.
-static cl::OptionCategory findAllSymbolsCategory("locate_deps options");
+static cl::OptionCategory findAllDependenciesCategory("locate_deps options");
 
 // CommonOptionsParser declares HelpMessage with a description of the common
 // command-line options related to the compilation database and input files.
@@ -44,7 +44,7 @@ static cl::extrahelp commonHelp(CommonOptionsParser::HelpMessage);
 static cl::opt<std::string> outputDir("output-dir", cl::desc(R"(
 The output directory for saving the results.)"),
                                       cl::init("."),
-                                      cl::cat(findAllSymbolsCategory));
+                                      cl::cat(findAllDependenciesCategory));
 
 namespace clang {
 namespace locate_deps {
@@ -71,7 +71,7 @@ public:
 }  // namespace clang
 
 int main(int argc, const char** argv) {
-    CommonOptionsParser optionsParser(argc, argv, findAllSymbolsCategory);
+    CommonOptionsParser optionsParser(argc, argv, findAllDependenciesCategory);
 
     ClangTool tool(optionsParser.getCompilations(),
                    optionsParser.getSourcePathList());
@@ -86,7 +86,7 @@ int main(int argc, const char** argv) {
     clang::locate_deps::YamlReporter Reporter;
 
     auto Factory =
-        llvm::make_unique<clang::locate_deps::FindAllSymbolsActionFactory>(
+        llvm::make_unique<clang::locate_deps::FindAllDependenciesActionFactory>(
             &Reporter, clang::locate_deps::getSTLPostfixHeaderMap());
 
     return tool.run(Factory.get());
