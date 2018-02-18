@@ -28,7 +28,7 @@ using AllowEnumTypes =
     typename std::enable_if<std::is_enum<T>::value, T>::type;
 
 template<typename EnumType>
-struct EnumMapper {
+struct EnumSerializer {
     static std::string serialize(EnumType value)
     {
         return std::to_string(static_cast<int>(value));
@@ -54,7 +54,7 @@ template<typename JsonValue, typename T, typename Allocator,
          typename Policy=AllowEnumTypes<T>>
 void serialize(JsonValue& output, T value, Allocator& allocator)
 {
-    serialize(output, EnumMapper<T>::serialize(value), allocator);
+    serialize(output, EnumSerializer<T>::serialize(value), allocator);
 }
 
 template<typename JsonValue, typename T, typename Allocator>

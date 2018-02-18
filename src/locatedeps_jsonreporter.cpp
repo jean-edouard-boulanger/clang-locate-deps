@@ -9,7 +9,6 @@
 #include <llvm/Support/FileSystem.h>
 #include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/CommandLine.h>
-#include <llvm/Support/raw_ostream.h>
 #include <llvm/Support/Path.h>
 
 #include <map>
@@ -19,7 +18,7 @@ namespace clang {
 namespace locate_deps {
 
 template<>
-struct EnumMapper<Context::Kind> {
+struct EnumSerializer<Context::Kind> {
     static std::string serialize(Context::Kind value)
     {
         static const std::map<Context::Kind, std::string> mapped = {
@@ -32,7 +31,7 @@ struct EnumMapper<Context::Kind> {
 };
 
 template<>
-struct EnumMapper<Symbol::Kind> {
+struct EnumSerializer<Symbol::Kind> {
     static std::string serialize(Symbol::Kind value)
     {
         static const std::map<Symbol::Kind, std::string> mapped = {
