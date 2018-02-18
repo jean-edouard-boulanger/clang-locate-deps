@@ -10,6 +10,18 @@ Dependency::Dependency(const Location& from, const Symbol& to):
     _to(to)
 {}
 
+const Location&
+Dependency::from() const
+{
+    return _from;
+}
+
+const Symbol&
+Dependency::to() const
+{
+    return _to;
+}
+
 bool
 Dependency::operator==(const Dependency& other) const
 {

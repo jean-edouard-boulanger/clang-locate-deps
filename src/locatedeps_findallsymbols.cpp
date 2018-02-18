@@ -7,6 +7,7 @@
 #include <locatedeps_symbolfactory.h>
 #include <locatedeps_symbol.h>
 #include <locatedeps_assert.h>
+#include <locatedeps_jsonreporter.h>
 
 #include <clang/AST/Decl.h>
 #include <clang/AST/DeclCXX.h>
@@ -245,6 +246,9 @@ FindAllSymbols::onEndOfTranslationUnit()
     {
         llvm::errs() << "found " << _dependencies.size()
                      << " dependencies in " << *_filename << "\n";
+
+        JsonReporter reporter;
+        reporter.report("", _dependencies);
 
         _dependencies.clear();
         _filename.reset();

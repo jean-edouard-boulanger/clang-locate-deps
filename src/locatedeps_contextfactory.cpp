@@ -37,7 +37,7 @@ build_scope(const NamedDecl& namedDecl)
         else if (const auto* enumDecl = dyn_cast<EnumDecl>(declContext))
         {
             scope.push_back(
-                Context(Context::Kind::EnumDecl,
+                Context(Context::Kind::Enum,
                         namespaceDecl->getName().str()));
         }
         else if (const auto* recordDecl = dyn_cast<RecordDecl>(declContext))

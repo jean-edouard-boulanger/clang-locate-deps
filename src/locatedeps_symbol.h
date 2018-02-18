@@ -23,6 +23,11 @@ public:
         Unknown,
     };
 
+    const Location& location() const;
+    const Scope& scope() const;
+    Kind kind() const;
+    const std::string& name() const;
+
     Symbol(const Location&, const Scope&, Kind kind, std::string name);
 
     bool operator==(const Symbol&) const;
@@ -34,6 +39,7 @@ private:
     Kind _kind;
     std::string _name;
 };
+
 
 }
 }

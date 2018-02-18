@@ -15,6 +15,30 @@ Symbol::Symbol(const Location& location,
                    _name(name)
 {}
 
+const Location&
+Symbol::location() const
+{
+    return _location;
+}
+
+const Scope&
+Symbol::scope() const
+{
+    return _scope;
+}
+
+Symbol::Kind
+Symbol::kind() const
+{
+    return _kind;
+}
+
+const std::string&
+Symbol::name() const
+{
+    return _name;
+}
+
 bool
 Symbol::operator==(const Symbol& other) const
 {

@@ -16,6 +16,9 @@ public:
     bool operator==(const Dependency&) const;
     bool operator<(const Dependency&) const;
 
+    const Location& from() const;
+    const Symbol& to() const;
+
 private:
     Location _from;
     Symbol _to;

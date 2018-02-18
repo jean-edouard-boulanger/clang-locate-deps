@@ -17,5 +17,5 @@ add_compile_options(-fno-exceptions)
 file(GLOB SRC "src/*.cpp" "src/*.h")
 add_executable(clang-locate-deps ${SRC})
 
-include_directories(src ${LLVM_INCLUDE_DIRS} ${RapidJSON_INCLUDE_DIRS})
+include_directories(src ${LLVM_INCLUDE_DIRS} ${RAPIDJSON_INCLUDE_DIRS})
 target_link_libraries(clang-locate-deps PRIVATE clangTooling)

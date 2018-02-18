@@ -10,6 +10,18 @@ Context::Context(Kind kind, std::string name):
     _name(name)
 {}
 
+Context::Kind
+Context::kind() const
+{
+    return _kind;
+}
+
+const std::string&
+Context::name() const
+{
+    return _name;
+}
+
 bool
 Context::operator==(const Context& other) const
 {

@@ -9,7 +9,10 @@
     {                                                                        \
         if(!(x))                                                             \
         {                                                                    \
-            std::cerr << "assertion failed: " << #x << std::endl;            \
+            std::cerr << "assertion failed: "                                \
+                      << #x                                                  \
+                      << " (in " << __FILE__ << ":" << __LINE__ << ")"       \
+                      << std::endl;                                          \
             std::exit(255);                                                  \
         }                                                                    \
     }                                                                        \
