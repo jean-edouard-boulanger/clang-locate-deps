@@ -20,7 +20,7 @@ struct EnumMapper<Context::Kind> {
         static const std::map<Context::Kind, std::string> mapped = {
             {Context::Kind::Namespace, "namespace"},
             {Context::Kind::Record, "class"},
-            {Context::Kind::Enum, "struct"},
+            {Context::Kind::Enum, "enum"},
         };
         return mapped.at(value);
     }
