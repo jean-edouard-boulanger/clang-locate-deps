@@ -1,6 +1,5 @@
 #include <locatedeps_findalldependenciesaction.h>
 #include <locatedeps_stlpostfixheadermap.h>
-#include <locatedeps_symbolinfo.h>
 #include <locatedeps_jsonreporter.h>
 
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -30,47 +29,21 @@
 
 using namespace clang::tooling;
 using namespace llvm;
-using SymbolInfo = clang::locate_deps::SymbolInfo;
 
 // Apply a custom category to all command-line options so that they are the
 // only ones displayed.
-static cl::OptionCategory findAllDependenciesCategory("locate_deps options");
+static cl::OptionCategory findAllDependenciesCategory("clang-locate-deps options");
 
 // CommonOptionsParser declares HelpMessage with a description of the common
 // command-line options related to the compilation database and input files.
 // It's nice to have this help message in all tools.
 static cl::extrahelp commonHelp(CommonOptionsParser::HelpMessage);
 
-static cl::opt<std::string> outputDir("output-dir", cl::desc(R"(
-The output directory for saving the results.)"),
-                                      cl::init("."),
-                                      cl::cat(findAllDependenciesCategory));
-
-namespace clang {
-namespace locate_deps {
-
-/*
-class YamlReporter : public SymbolReporter {
-public:
-    void reportSymbols(StringRef FileName,
-                       const SymbolInfo::SignalMap& symbols) override
-    {
-        int descriptor;
-        SmallString<128> resultPath;
-        llvm::sys::fs::createUniqueFile(
-            outputDir + "/" + llvm::sys::path::filename(FileName) +
-                "-%%%%%%.yaml",
-            descriptor, resultPath);
-
-        const bool shouldClose = true;
-        llvm::raw_fd_ostream os(descriptor, shouldClose);
-        WriteSymbolInfosToStream(os, symbols);
-    }
-};
-*/
-
-}  // namespace locate_deps
-}  // namespace clang
+static cl::opt<std::string> outputDirectory(
+    "output-dir",
+    cl::desc("Output directory to save the results "
+             "(Default to current directory)"),
+    cl::init("."), cl::cat(findAllDependenciesCategory));
 
 int main(int argc, const char** argv) {
     CommonOptionsParser optionsParser(argc, argv, findAllDependenciesCategory);
@@ -85,7 +58,7 @@ int main(int argc, const char** argv) {
         return 1;
     }
 
-    clang::locate_deps::JsonReporter reporter;
+    clang::locate_deps::JsonReporter reporter(outputDirectory);
 
     auto Factory =
         llvm::make_unique<clang::locate_deps::FindAllDependenciesActionFactory>(

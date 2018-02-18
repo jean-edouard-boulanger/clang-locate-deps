@@ -1,8 +1,6 @@
 #ifndef LOCATE_DEPS_FIND_ALL_DEPENDENCIES
 #define LOCATE_DEPS_FIND_ALL_DEPENDENCIES
 
-#include <locatedeps_symbolinfo.h>
-#include <locatedeps_dependenciesreporter.h>
 #include <locatedeps_dependency.h>
 
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -16,19 +14,8 @@ namespace clang {
 namespace locate_deps {
 
 class HeaderMapCollector;
+class DependenciesReporter;
 
-/// \brief FindAllSymbols collects all classes, free standing functions and
-/// global variables with some extra information such as the path of the header
-/// file, the namespaces they are contained in, the type of variables and the
-/// parameter types of functions.
-///
-/// NOTE:
-///   - Symbols declared in main files are not collected since they can not be
-///   included.
-///   - Member functions are not collected because accessing them must go
-///   through the class. #include fixer only needs the class name to find
-///   headers.
-///
 class FindAllDependencies : public ast_matchers::MatchFinder::MatchCallback {
 public:
     explicit FindAllDependencies(DependenciesReporter& reporter,

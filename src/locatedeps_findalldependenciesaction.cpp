@@ -13,15 +13,6 @@ FindAllDependenciesAction::CreateASTConsumer(
     return _matchFinder.newASTConsumer();
 }
 
-/*
-FindAllDependenciesActionFactory::FindAllDependenciesActionFactory(
-    SymbolReporter& reporter,
-    const HeaderMapCollector::RegexHeaderMap* regexHeaderMap):
-        _reporter(reporter),
-        _regexHeaderMap(regexHeaderMap)
-{}
-*/
-
 clang::FrontendAction*
 FindAllDependenciesActionFactory::create()
 {

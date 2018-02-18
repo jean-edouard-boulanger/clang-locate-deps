@@ -1,8 +1,8 @@
 #include <locatedeps_findalldependencies.h>
 #include <locatedeps_headermapcollector.h>
 #include <locatedeps_pathconfig.h>
-#include <locatedeps_symbolinfo.h>
 #include <locatedeps_dependency.h>
+#include <locatedeps_dependenciesreporter.h>
 #include <locatedeps_location.h>
 #include <locatedeps_symbolfactory.h>
 #include <locatedeps_symbol.h>
@@ -18,6 +18,7 @@
 
 #include <llvm/ADT/Optional.h>
 #include <llvm/Support/FileSystem.h>
+
 
 using namespace clang::ast_matchers;
 
@@ -190,12 +191,10 @@ FindAllDependencies::run(const MatchFinder::MatchResult& result)
 
     const SourceManager& sourceManager = *(result.SourceManager);
 
-    SymbolInfo::Signals Signals;
-    const NamedDecl* namedDecl;
-
     const std::string mainFileName = sourceManager.getFileEntryForID(
         sourceManager.getMainFileID())->getName();
 
+    const NamedDecl* namedDecl;
     if ((namedDecl = result.Nodes.getNodeAs<NamedDecl>("use")))
     {
         llvm::Optional<SourceLocation> clientLocation;

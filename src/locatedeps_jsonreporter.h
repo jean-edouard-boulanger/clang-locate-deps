@@ -15,8 +15,15 @@ namespace locate_deps {
 
 class JsonReporter : public DependenciesReporter {
 public:
+    JsonReporter(const std::string& outputDirectory):
+        _outputDirectory(outputDirectory)
+    {}
+
     void report(llvm::StringRef filename,
                 const std::set<Dependency>& dependencies) override;
+
+private:
+    std::string _outputDirectory;
 };
 
 }
