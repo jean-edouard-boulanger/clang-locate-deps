@@ -5,7 +5,12 @@
 #include <locatedeps_context.h>
 #include <locatedeps_location.h>
 
+#include <llvm/ADT/SmallString.h>
+#include <llvm/Support/FileSystem.h>
 #include <llvm/Support/raw_ostream.h>
+#include <llvm/Support/CommandLine.h>
+#include <llvm/Support/raw_ostream.h>
+#include <llvm/Support/Path.h>
 
 #include <map>
 
@@ -93,12 +98,22 @@ serialize(JsonValue& out,
 }
 
 void
-JsonReporter::report(llvm::StringRef filename,
+JsonReporter::report(llvm::StringRef fileName,
                      const std::set<Dependency>& dependencies)
 {
+    int descriptor;
+    llvm::SmallString<128> resultPath;
+    llvm::sys::fs::createUniqueFile(
+        _outputDirectory + "/" + llvm::sys::path::filename(fileName)
+            + "-%%%%%%.json",
+        descriptor, resultPath);
+
+    const bool shouldClose = true;
+    llvm::raw_fd_ostream os(descriptor, shouldClose);
+
     json::Document doc(json::kObjectType);
     map(doc, "dependencies", dependencies, doc.GetAllocator());
-    pretty_print(llvm::errs(), doc) << "\n";
+    pretty_print(os, doc);
 }
 
 }

@@ -243,9 +243,6 @@ FindAllDependencies::onEndOfTranslationUnit()
 {
     if (_filename)
     {
-        llvm::errs() << "found " << _dependencies.size()
-                     << " dependencies in " << *_filename << "\n";
-
         _reporter.report(*_filename, _dependencies);
         _dependencies.clear();
         _filename.reset();

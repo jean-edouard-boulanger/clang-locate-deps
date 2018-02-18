@@ -19,7 +19,7 @@ public:
         _outputDirectory(outputDirectory)
     {}
 
-    void report(llvm::StringRef filename,
+    void report(llvm::StringRef fileName,
                 const std::set<Dependency>& dependencies) override;
 
 private:

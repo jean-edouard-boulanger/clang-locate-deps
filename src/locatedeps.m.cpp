@@ -11,12 +11,9 @@
 #include <clang/Tooling/Tooling.h>
 
 #include <llvm/ADT/ArrayRef.h>
-#include <llvm/ADT/SmallString.h>
 #include <llvm/ADT/StringRef.h>
 #include <llvm/Support/CommandLine.h>
-#include <llvm/Support/FileSystem.h>
 #include <llvm/Support/MemoryBuffer.h>
-#include <llvm/Support/Path.h>
 #include <llvm/Support/ThreadPool.h>
 #include <llvm/Support/raw_ostream.h>
 
@@ -32,7 +29,8 @@ using namespace llvm;
 
 // Apply a custom category to all command-line options so that they are the
 // only ones displayed.
-static cl::OptionCategory findAllDependenciesCategory("clang-locate-deps options");
+static cl::OptionCategory findAllDependenciesCategory(
+    "clang-locate-deps options");
 
 // CommonOptionsParser declares HelpMessage with a description of the common
 // command-line options related to the compilation database and input files.
