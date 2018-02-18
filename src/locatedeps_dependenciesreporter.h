@@ -1,18 +1,23 @@
 #ifndef LOCATE_DEPS_SYMBOL_REPORTER_H
 #define LOCATE_DEPS_SYMBOL_REPORTER_H
 
-#include <locatedeps_symbolinfo.h>
+#include <locatedeps_dependency.h>
+
+#include <llvm/ADT/StringRef.h>
+
+#include <set>
+
 
 namespace clang {
 namespace locate_deps {
 
 /// \brief An interface for classes that collect symbols.
-class SymbolReporter {
+class DependenciesReporter {
 public:
-    virtual ~SymbolReporter() = default;
+    virtual ~DependenciesReporter() = default;
 
-    virtual void reportSymbols(llvm::StringRef FileName,
-                               const SymbolInfo::SignalMap& Symbols) = 0;
+    virtual void report(llvm::StringRef fileName,
+                        const std::set<Dependency>&) = 0;
 };
 
 }  // namespace locate_deps

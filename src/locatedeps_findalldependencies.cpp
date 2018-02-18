@@ -47,7 +47,7 @@ AST_POLYMORPHIC_MATCHER(isFullySpecialized,
 
 }  // namespace
 
-FindAllDependencies::FindAllDependencies(SymbolReporter* reporter,
+FindAllDependencies::FindAllDependencies(DependenciesReporter& reporter,
                                          HeaderMapCollector* collector):
                                              _reporter(reporter),
                                              _collector(collector)
@@ -247,9 +247,7 @@ FindAllDependencies::onEndOfTranslationUnit()
         llvm::errs() << "found " << _dependencies.size()
                      << " dependencies in " << *_filename << "\n";
 
-        JsonReporter reporter;
-        reporter.report("", _dependencies);
-
+        _reporter.report(*_filename, _dependencies);
         _dependencies.clear();
         _filename.reset();
     }

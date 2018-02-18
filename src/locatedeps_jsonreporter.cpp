@@ -93,7 +93,7 @@ serialize(JsonValue& out,
 }
 
 void
-JsonReporter::report(const std::string& filename,
+JsonReporter::report(llvm::StringRef filename,
                      const std::set<Dependency>& dependencies)
 {
     json::Document doc(json::kObjectType);

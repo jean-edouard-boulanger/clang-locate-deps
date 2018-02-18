@@ -2,7 +2,7 @@
 #define LOCATE_DEPS_FIND_ALL_DEPENDENCIES
 
 #include <locatedeps_symbolinfo.h>
-#include <locatedeps_symbolreporter.h>
+#include <locatedeps_dependenciesreporter.h>
 #include <locatedeps_dependency.h>
 
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -31,7 +31,7 @@ class HeaderMapCollector;
 ///
 class FindAllDependencies : public ast_matchers::MatchFinder::MatchCallback {
 public:
-    explicit FindAllDependencies(SymbolReporter* reporter,
+    explicit FindAllDependencies(DependenciesReporter& reporter,
                                  HeaderMapCollector* collector = nullptr);
 
     void registerMatchers(ast_matchers::MatchFinder* MatchFinder);
@@ -44,7 +44,7 @@ protected:
 private:
     llvm::Optional<std::string> _filename;
     std::set<Dependency> _dependencies;
-    SymbolReporter* const _reporter;
+    DependenciesReporter& _reporter;
     HeaderMapCollector* const _collector;
 };
 

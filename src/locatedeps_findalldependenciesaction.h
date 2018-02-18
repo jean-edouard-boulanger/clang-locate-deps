@@ -19,14 +19,21 @@ namespace locate_deps {
 class FindAllDependenciesAction : public clang::ASTFrontendAction {
 public:
     explicit FindAllDependenciesAction(
-        SymbolReporter*,
-        const HeaderMapCollector::RegexHeaderMap* = nullptr);
+        DependenciesReporter& reporter,
+        const HeaderMapCollector::RegexHeaderMap* regexHeaderMap = nullptr):
+            _reporter(reporter),
+            _collector(regexHeaderMap),
+            _matcher(reporter, &_collector)
+    {
+        _matcher.registerMatchers(&_matchFinder);
+    }
 
-    std::unique_ptr<clang::ASTConsumer> CreateASTConsumer(
-        clang::CompilerInstance& compiler, StringRef inputFile) override;
+    std::unique_ptr<clang::ASTConsumer>
+    CreateASTConsumer(clang::CompilerInstance& compiler,
+                      StringRef inputFile) override;
 
 private:
-    SymbolReporter* const _reporter;
+    DependenciesReporter& _reporter;
     clang::ast_matchers::MatchFinder _matchFinder;
     HeaderMapCollector _collector;
     FindAllDependencies _matcher;
@@ -35,13 +42,16 @@ private:
 class FindAllDependenciesActionFactory : public tooling::FrontendActionFactory {
 public:
     FindAllDependenciesActionFactory(
-        SymbolReporter* reporter,
-        const HeaderMapCollector::RegexHeaderMap* regexHeaderMap = nullptr);
+        DependenciesReporter& reporter,
+        const HeaderMapCollector::RegexHeaderMap* regexHeaderMap = nullptr):
+            _reporter(reporter),
+            _regexHeaderMap(regexHeaderMap)
+    {}
 
     clang::FrontendAction* create() override;
 
 private:
-    SymbolReporter* const _reporter;
+    DependenciesReporter& _reporter;
     const HeaderMapCollector::RegexHeaderMap* const _regexHeaderMap;
 };
 

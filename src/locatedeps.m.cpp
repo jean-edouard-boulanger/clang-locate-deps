@@ -1,7 +1,7 @@
 #include <locatedeps_findalldependenciesaction.h>
 #include <locatedeps_stlpostfixheadermap.h>
 #include <locatedeps_symbolinfo.h>
-#include <locatedeps_symbolreporter.h>
+#include <locatedeps_jsonreporter.h>
 
 #include <clang/ASTMatchers/ASTMatchFinder.h>
 #include <clang/ASTMatchers/ASTMatchers.h>
@@ -49,6 +49,7 @@ The output directory for saving the results.)"),
 namespace clang {
 namespace locate_deps {
 
+/*
 class YamlReporter : public SymbolReporter {
 public:
     void reportSymbols(StringRef FileName,
@@ -66,6 +67,7 @@ public:
         WriteSymbolInfosToStream(os, symbols);
     }
 };
+*/
 
 }  // namespace locate_deps
 }  // namespace clang
@@ -83,11 +85,11 @@ int main(int argc, const char** argv) {
         return 1;
     }
 
-    clang::locate_deps::YamlReporter Reporter;
+    clang::locate_deps::JsonReporter reporter;
 
     auto Factory =
         llvm::make_unique<clang::locate_deps::FindAllDependenciesActionFactory>(
-            &Reporter, clang::locate_deps::getSTLPostfixHeaderMap());
+            reporter, clang::locate_deps::getSTLPostfixHeaderMap());
 
     return tool.run(Factory.get());
 }
