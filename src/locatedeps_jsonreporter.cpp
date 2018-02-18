@@ -11,6 +11,7 @@
 #include <llvm/Support/CommandLine.h>
 #include <llvm/Support/Path.h>
 
+#include <fstream>
 #include <map>
 
 
@@ -107,11 +108,11 @@ JsonReporter::report(llvm::StringRef fileName,
             + "-%%%%%%.json",
         descriptor, resultPath);
 
-    const bool shouldClose = true;
-    llvm::raw_fd_ostream os(descriptor, shouldClose);
+    std::ofstream os(resultPath.str());
 
     json::Document doc(json::kObjectType);
     map(doc, "dependencies", dependencies, doc.GetAllocator());
+
     pretty_print(os, doc);
 }
 

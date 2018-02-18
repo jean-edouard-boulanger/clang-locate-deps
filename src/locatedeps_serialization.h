@@ -6,12 +6,14 @@
 #include <rapidjson/document.h>
 #include <rapidjson/stringbuffer.h>
 #include <rapidjson/writer.h>
-#include "rapidjson/prettywriter.h"
+#include <rapidjson/prettywriter.h>
+#include <rapidjson/ostreamwrapper.h>
 
+#include <fstream>
 #include <string>
-#include <vector>
 #include <set>
 #include <type_traits>
+#include <vector>
 
 
 namespace json = rapidjson;
@@ -19,13 +21,13 @@ namespace json = rapidjson;
 namespace clang {
 namespace locate_deps {
 
-template<typename T>
-using AllowArithmeticTypes =
-    typename std::enable_if<std::is_arithmetic<T>::value, T>::type;
+template<typename T, typename RT>
+using allow_numericals =
+    typename std::enable_if<std::is_arithmetic<T>::value, RT>::type;
 
-template<typename T>
-using AllowEnumTypes =
-    typename std::enable_if<std::is_enum<T>::value, T>::type;
+template<typename T, typename RT>
+using allow_enums =
+    typename std::enable_if<std::is_enum<T>::value, RT>::type;
 
 template<typename EnumType>
 struct EnumSerializer {
@@ -43,16 +45,16 @@ void serialize(JsonValue& output,
     output.SetString(value.c_str(), allocator);
 }
 
-template<typename JsonValue, typename T, typename Allocator,
-         typename Policy=AllowArithmeticTypes<T>>
-void serialize(JsonValue& output, const T& value, Allocator& allocator)
+template<typename JsonValue, typename T, typename Allocator>
+allow_numericals<T, void>
+serialize(JsonValue& output, const T& value, Allocator& allocator)
 {
     output = value;
 }
 
-template<typename JsonValue, typename T, typename Allocator,
-         typename Policy=AllowEnumTypes<T>>
-void serialize(JsonValue& output, T value, Allocator& allocator)
+template<typename JsonValue, typename T, typename Allocator>
+allow_enums<T, void>
+serialize(JsonValue& output, T value, Allocator& allocator)
 {
     serialize(output, EnumSerializer<T>::serialize(value), allocator);
 }
@@ -63,6 +65,8 @@ void serialize(JsonValue& output,
                Allocator& allocator)
 {
     output.SetArray();
+    output.Reserve(values.size(), allocator);
+
     for(const auto& value: values)
     {
         json::Value jValue;
@@ -78,6 +82,8 @@ void serialize(JsonValue& output,
                Allocator& allocator)
 {
     output.SetArray();
+    output.Reserve(values.size(), allocator);
+
     for(const auto& value: values)
     {
         json::Value jValue;
@@ -105,17 +111,6 @@ void map(JsonValue& output,
 }
 
 template<typename Stream>
-Stream& print(Stream& os, const json::Document& document)
-{
-    json::StringBuffer buffer;
-    json::Writer<json::StringBuffer> writer(buffer);
-    document.Accept(writer);
-
-    os << buffer.GetString();
-    return os;
-}
-
-template<typename Stream>
 Stream& pretty_print(Stream& os, const json::Document& document)
 {
     json::StringBuffer buffer;
@@ -123,6 +118,16 @@ Stream& pretty_print(Stream& os, const json::Document& document)
     document.Accept(writer);
 
     os << buffer.GetString();
+    return os;
+}
+
+inline
+std::ofstream& pretty_print(std::ofstream& os, const json::Document& document)
+{
+    json::OStreamWrapper osw(os);
+    json::PrettyWriter<json::OStreamWrapper> writer(osw);
+    document.Accept(writer);
+
     return os;
 }
 
