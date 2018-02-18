@@ -15,9 +15,38 @@ namespace locate_deps {
 namespace {
 
 std::string
-make_symbol_name(const FunctionDecl& functionDecl)
+prettyArguments(clang::FunctionDecl::param_const_iterator first,
+                clang::FunctionDecl::param_const_iterator last)
 {
-    return functionDecl.getNameAsString();
+    std::string output;
+    while(first != last)
+    {
+        output += (*first)->getOriginalType().getAsString();
+        if((++first) != last)
+        {
+            output += ", ";
+        }
+    }
+    return output;
+}
+
+std::string
+make_symbol_name(const FunctionDecl& f)
+{
+    return f.getReturnType().getAsString()
+           + std::string(" ")
+           + f.getQualifiedNameAsString()
+           + std::string("(")
+           + prettyArguments(f.param_begin(), f.param_end())
+           + std::string(")");
+}
+
+std::string
+make_symbol_name(const VarDecl& varDecl)
+{
+    return varDecl.getType().getAsString()
+           + std::string(" ")
+           + varDecl.getNameAsString();
 }
 
 std::string
@@ -27,6 +56,11 @@ make_symbol_name(const NamedDecl& namedDecl)
     {
         return make_symbol_name(
             *llvm::dyn_cast<FunctionDecl>(&namedDecl));
+    }
+    if(llvm::isa<VarDecl>(namedDecl))
+    {
+        return make_symbol_name(
+            *llvm::dyn_cast<VarDecl>(&namedDecl));
     }
     return namedDecl.getNameAsString();
 }
