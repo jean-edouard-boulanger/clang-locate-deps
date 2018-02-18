@@ -211,7 +211,7 @@ FindAllDependencies::run(const MatchFinder::MatchResult& result)
             return;
         }
 
-        // TODO: understand why this need to be done
+        // TODO: understand why this needs to be done
         if(!sourceManager.isInMainFile(*clientLocation))
         {
             return;

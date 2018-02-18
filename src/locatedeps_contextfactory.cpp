@@ -26,25 +26,24 @@ build_scope(const NamedDecl& namedDecl)
         UNSAFE_ASSERT(llvm::isa<NamedDecl>(declContext) &&
             "Expect declContext to be a NamedDecl");
 
-        if (const auto* namespaceDecl = dyn_cast<NamespaceDecl>(declContext))
+        if(const auto* namespaceDecl = dyn_cast<NamespaceDecl>(declContext))
         {
             if(namespaceDecl->isInlineNamespace()) continue;
-
-            scope.push_back(
+            scope.emplace_back(
                 Context(Context::Kind::Namespace,
                         namespaceDecl->getName().str()));
         }
-        else if (const auto* enumDecl = dyn_cast<EnumDecl>(declContext))
+        else if(const auto* enumDecl = dyn_cast<EnumDecl>(declContext))
         {
-            scope.push_back(
+            scope.emplace_back(
                 Context(Context::Kind::Enum,
-                        namespaceDecl->getName().str()));
+                        enumDecl->getName().str()));
         }
-        else if (const auto* recordDecl = dyn_cast<RecordDecl>(declContext))
+        else if(const auto* recordDecl = dyn_cast<RecordDecl>(declContext))
         {
-            scope.push_back(
+            scope.emplace_back(
                 Context(Context::Kind::Record,
-                        namespaceDecl->getName().str()));
+                        recordDecl->getName().str()));
         }
         else
         {
