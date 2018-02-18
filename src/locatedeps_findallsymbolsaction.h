@@ -1,7 +1,7 @@
 #ifndef LOCATE_DEPS_FIND_ALL_SYMBOLS_ACTION_H
 #define LOCATE_DEPS_FIND_ALL_SYMBOLS_ACTION_H
 
-#include <locatedeps_findallsymbols.h>
+#include <locatedeps_findalldependencies.h>
 #include <locatedeps_headermapcollector.h>
 
 #include <clang/ASTMatchers/ASTMatchFinder.h>
@@ -29,7 +29,7 @@ private:
     SymbolReporter* const Reporter;
     clang::ast_matchers::MatchFinder MatchFinder;
     HeaderMapCollector Collector;
-    FindAllSymbols Matcher;
+    FindAllDependencies Matcher;
 };
 
 class FindAllSymbolsActionFactory : public tooling::FrontendActionFactory {

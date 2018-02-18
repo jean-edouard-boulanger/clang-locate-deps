@@ -1,4 +1,4 @@
-#include <locatedeps_findallsymbols.h>
+#include <locatedeps_findalldependencies.h>
 #include <locatedeps_headermapcollector.h>
 #include <locatedeps_pathconfig.h>
 #include <locatedeps_symbolinfo.h>
@@ -47,14 +47,14 @@ AST_POLYMORPHIC_MATCHER(isFullySpecialized,
 
 }  // namespace
 
-FindAllSymbols::FindAllSymbols(SymbolReporter* reporter,
-                               HeaderMapCollector* collector):
-                                   _reporter(reporter),
-                                   _collector(collector)
+FindAllDependencies::FindAllDependencies(SymbolReporter* reporter,
+                                         HeaderMapCollector* collector):
+                                             _reporter(reporter),
+                                             _collector(collector)
 {}
 
 void
-FindAllSymbols::registerMatchers(MatchFinder* MatchFinder)
+FindAllDependencies::registerMatchers(MatchFinder* MatchFinder)
 {
     // FIXME: Handle specialization.
     auto IsInSpecialization = hasAncestor(
@@ -180,7 +180,7 @@ FindAllSymbols::registerMatchers(MatchFinder* MatchFinder)
 }
 
 void
-FindAllSymbols::run(const MatchFinder::MatchResult& result)
+FindAllDependencies::run(const MatchFinder::MatchResult& result)
 {
     // Ignore Results in failing TUs.
     if (result.Context->getDiagnostics().hasErrorOccurred())
@@ -240,7 +240,7 @@ FindAllSymbols::run(const MatchFinder::MatchResult& result)
 }
 
 void
-FindAllSymbols::onEndOfTranslationUnit()
+FindAllDependencies::onEndOfTranslationUnit()
 {
     if (_filename)
     {

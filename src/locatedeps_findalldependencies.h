@@ -1,5 +1,5 @@
-#ifndef LOCATE_DEPS_FIND_ALL_SYMBOLS_H
-#define LOCATE_DEPS_FIND_ALL_SYMBOLS_H
+#ifndef LOCATE_DEPS_FIND_ALL_DEPENDENCIES
+#define LOCATE_DEPS_FIND_ALL_DEPENDENCIES
 
 #include <locatedeps_symbolinfo.h>
 #include <locatedeps_symbolreporter.h>
@@ -29,10 +29,10 @@ class HeaderMapCollector;
 ///   through the class. #include fixer only needs the class name to find
 ///   headers.
 ///
-class FindAllSymbols : public ast_matchers::MatchFinder::MatchCallback {
+class FindAllDependencies : public ast_matchers::MatchFinder::MatchCallback {
 public:
-    explicit FindAllSymbols(SymbolReporter* reporter,
-                            HeaderMapCollector* collector = nullptr);
+    explicit FindAllDependencies(SymbolReporter* reporter,
+                                 HeaderMapCollector* collector = nullptr);
 
     void registerMatchers(ast_matchers::MatchFinder* MatchFinder);
 
@@ -51,4 +51,4 @@ private:
 }  // namespace locate_deps
 }  // namespace clang
 
-#endif  // LOCATE_DEPS_FIND_ALL_SYMBOLS_H
+#endif  // LOCATE_DEPS_FIND_ALL_DEPENDENCIES
